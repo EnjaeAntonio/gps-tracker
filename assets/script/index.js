@@ -42,8 +42,8 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZW5qYWUiLCJhIjoiY2xiZ3Jvd2h4MDl5YjN3bW1nNDVmb
                   container: 'map',
                   style: 'mapbox://styles/mapbox/streets-v12',
                   center: [0, 0],
-                  pitch: 20,
-                  zoom: 13,
+                  pitch: 40,
+                  zoom: 16,
                 });
 
                 map.dragPan.disable();
