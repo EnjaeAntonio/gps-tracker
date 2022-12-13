@@ -46,11 +46,11 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiZW5qYWUiLCJhIjoiY2xiZ3Jvd2h4MDl5YjN3bW1nNDVmb
                   zoom: 16,
                 });
 
-                map.dragPan.disable();
-                map.keyboard.disable();
-                map.scrollZoom.disable();
-                map.doubleClickZoom.disable();
-                map.touchZoomRotate.disable();
+                // map.dragPan.disable();
+                // map.keyboard.disable();
+                // map.scrollZoom.disable();
+                // map.doubleClickZoom.disable();
+                // map.touchZoomRotate.disable();
                 
                 const marker = new mapboxgl.Marker({
                         color: "#3898ff",
