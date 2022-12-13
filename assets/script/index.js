@@ -32,53 +32,55 @@ function sleep(duration){
 };
 
 const loadScreen = select('.load-screen');
+const loader = select('.loader')
 const myMap = select('#map');
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiZW5qYWUiLCJhIjoiY2xiZ3Jvd2h4MDl5YjN3bW1nNDVmbTc3aiJ9.7a11htvZ_4iZBrcr47Aubw';
 
-function getLocation(position){
-        const { longitude, latitude } = position.coords;
-
         const map = new mapboxgl.Map({
-                container: 'map',
-                center: [longitude, latitude],
-                style: 'mapbox://styles/mapbox/streets-v12',
-                zoom: 17
+                  container: 'map',
+                  style: 'mapbox://styles/mapbox/streets-v12',
+                  center: [0, 0],
+                  pitch: 20,
+                  zoom: 13,
                 });
+
+                map.dragPan.disable();
+                map.keyboard.disable();
+                map.scrollZoom.disable();
+                map.doubleClickZoom.disable();
+                map.touchZoomRotate.disable();
                 
                 const marker = new mapboxgl.Marker({
-                        color: "#89CFF5 ",
+                        color: "#3898ff",
                         draggable: true
-                        }).setLngLat([longitude, latitude])
-                        .addTo(map);
+                        });
+
+function getLocation(position){
+    const { longitude, latitude } = position.coords;
+                  
+    if (longitude && latitude) {
+      map.setCenter([longitude, latitude]);
+      marker.setLngLat([longitude, latitude]).addTo(map);
+      setTimeout(() => {loadScreen.classList.add('hidden')}, 750)
+
+    };
 };
 
-function errorHandler(error) {
-        console.log(error.message);
+function errorHandler(event) {
+  loader.style.animationPlayState = 'paused';
+  console.log(event.message);
 };
 
 const options = {
-        enableHighAccuracy: true,
-        showUserLocation: true
-};
-
-
-if (navigator.geolocation) {
-        const geo = navigator.geolocation;
-        geo.getCurrentPosition(getLocation, errorHandler, options);
-        sleep(5000).then(() => myMap.classList.remove('hidden'))
-
-}else {
-        console.log('Geolocation is not supported by your old browser');
+  enableHighAccuracy: true,
+  maximumAge: 0
 }
 
-let vh = window.innerHeight * 0.01;
-document.documentElement.style.setProperty('--vh', `${vh}px`);
-
-
-
-window.addEventListener('resize', () => {
-  vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-}); 
+if (navigator.geolocation) {
+  const geo = navigator.geolocation;
+  geo.watchPosition(getLocation, errorHandler, options);
+}else {
+  console.log('Geolocation is not supported by your old browser');
+}
