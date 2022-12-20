@@ -78,6 +78,11 @@ const options = {
   maximumAge: 0
 }
 
+/*
+ The watchPosition() method is used to register a handler function that will
+ be called automatically each time the position of the device changes
+*/
+
 if (navigator.geolocation) {
   const geo = navigator.geolocation;
   geo.watchPosition(getLocation, errorHandler, options);
